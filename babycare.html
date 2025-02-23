@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baby Care Services</title>
+    <link rel="stylesheet" href="baby.css">
+    
+</head>
+<body>
+    <header>
+        <h1>Comprehensive Baby Care Services</h1>
+        <p>Safe, loving, and professional care for your little one.</p>
+        <a href="services.html" class="btn">Go Back</a>
+    </header>
+    
+
+    <section id="services">
+        <h2>Our Baby Care Services</h2>
+        <div class="service-grid">
+            <div class="service-card">
+                <img src="./assets/images/icons/babysit.png" alt="Infant Feeding">
+                <h3>Infant babysitting</h3>
+                <p>Hire a professional nanny</p>
+                <a href="nannybooking.html" class="btn">Book Now</a>
+            </div>
+            
+            
+            <div class="service-card">
+                <img src="./assets/images/icons/parentsupport.png" alt="Parent Support">
+                <h3>Live Chat with Childcare Experts</h3>
+                <p>24/7 support for new parents.</p>
+                <a href="livechat.html" class="btn">Chat here</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials">
+        <h2>What Parents Say</h2>
+        <div class="testimonial">
+            <p>"The babysitting service was excellent! My baby was well cared for and happy!"</p>
+            <span>- Emma, First-time Mom</span>
+        </div>
+        <div class="testimonial">
+            <p>"The growth tracker helped me monitor my baby’s progress easily."</p>
+            <span>- David, Proud Dad</span>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Communex. All rights reserved.</p>
+    </footer>
+    <script>
+        let index = 0;
+        function showTestimonial() {
+            const testimonials = document.querySelectorAll('.testimonial');
+            testimonials.forEach((t, i) => {
+                t.style.display = i === index ? 'block' : 'none';
+            });
+            index = (index + 1) % testimonials.length;
+        }
+        setInterval(showTestimonial, 3000);
+        showTestimonial();
+    </script>
+</body>
+</html>

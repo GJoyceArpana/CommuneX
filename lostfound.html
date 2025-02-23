@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost & Found Pets</title>
+    <link rel="stylesheet" href="lostfound.css">
+    <script defer src="scripts.js"></script>
+    
+</head>
+<body>
+    <header>Lost & Found Pets</header>
+    <p><a href="dogcareui.html" class="btn">Explore DogCare</a></p>
+    
+    <div class="container">
+        <div class="section">
+            <h2>Report a Lost Pet</h2>
+            <form id="lostPetForm">
+                <label for="petName">Pet's Name:</label>
+                <input type="text" id="petName" name="petName" required>
+                
+                <label for="petDescription">Description:</label>
+                <textarea id="petDescription" name="petDescription" required></textarea>
+                
+                <label for="lastSeen">Last Seen Location:</label>
+                <input type="text" id="lastSeen" name="lastSeen" required>
+                
+                <label for="ownerName">Your Name:</label>
+                <input type="text" id="ownerName" name="ownerName" required>
+                
+                <label for="contact">Contact Number:</label>
+                <input type="tel" id="contact" name="contact" required>
+                
+                <label for="petImage">Upload Pet Image:</label>
+                <input type="file" id="petImage" name="petImage" accept="image/*">
+                
+                <button type="submit" class="btn">Report Lost Pet</button>
+            </form>
+        </div>
+        
+        <div class="section">
+            <h2>Found Pets</h2>
+            <div id="foundPetsList">
+                <p>No found pets reported yet.</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Communex. All rights reserved.</p>
+    </footer>
+</body>
+</html>

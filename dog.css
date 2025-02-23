@@ -1,0 +1,97 @@
+/* General Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    background: url('./assets/images/icons/baby2.png') no-repeat center center/cover;
+    color: #333;
+}
+
+/* Header */
+header {
+    background-color: #ff9999; /* Softer red for warmth */
+    padding: 20px;
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Buttons */
+.btn {
+    display: inline-block;
+    background-color: #ff6666;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #ff4d4d;
+    transform: scale(1.05);
+}
+
+/* Services Section */
+#services {
+    padding: 50px 20px;
+    background: rgba(255, 235, 205, 0.5); /* Light peach tint */
+    border-radius: 10px;
+    margin: 20px auto;
+    max-width: 90%;
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+#services h2 {
+    color: #d9534f; /* Warm red */
+}
+
+/* Service Cards */
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.service-card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.service-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+.service-card img {
+    max-width: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.service-card h3 {
+    font-size: 1.4em;
+    color: #444;
+}
+
+.service-card p {
+    font-size: 1em;
+    color: #666;
+}
+
+
+
+/* Footer */
+footer {
+    background: #333;
+    color: white;
+    padding: 15px;
+    font-size: 0.9em;
+}

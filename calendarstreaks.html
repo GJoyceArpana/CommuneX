@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communex - Calendar Streaks</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Communex Calendar Streaks</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="fitness.html">Fitness</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="calendar-streaks">
+        <h2>Track Your Fitness Streaks</h2>
+        <div id="calendar">
+            <!-- Calendar will be dynamically generated here -->
+        </div>
+        <p id="streakMessage"></p>
+    </section>
+
+    <section id="streak-tips">
+        <h2>Tips to Maintain Your Streak</h2>
+        <ul>
+            <li>Set a daily fitness goal (e.g., 30 minutes of exercise).</li>
+            <li>Use reminders to stay consistent.</li>
+            <li>Celebrate small milestones to stay motivated.</li>
+        </ul>
+    </section>
+
+    <section id="streak-form">
+        <h2>Log Your Progress</h2>
+        <form id="streakLogForm">
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="activity">Activity:</label>
+            <input type="text" id="activity" name="activity" placeholder="e.g., Running, Yoga" required>
+
+            <label for="duration">Duration (minutes):</label>
+            <input type="number" id="duration" name="duration" required>
+
+            <button type="submit">Log Activity</button>
+        </form>
+        <p id="logResponse"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Communex. All rights reserved.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

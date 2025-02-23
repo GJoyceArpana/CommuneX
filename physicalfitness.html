@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Communex - Physical Fitness</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Communex Physical Fitness</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="fitness.html">Fitness</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="physical-fitness">
+        <h2>Physical Fitness Programs</h2>
+        <div class="program-card">
+            <img src="assets/images/yoga.jpg" alt="Yoga">
+            <h3>Yoga Classes</h3>
+            <p>Improve flexibility and mental health with our expert yoga trainers.</p>
+            <button onclick="viewYogaSchedule()">View Schedule</button>
+        </div>
+        <div class="program-card">
+            <img src="assets/images/strength-training.jpg" alt="Strength Training">
+            <h3>Strength Training</h3>
+            <p>Build strength and endurance with personalized training programs.</p>
+            <button onclick="viewStrengthSchedule()">View Schedule</button>
+        </div>
+        <div class="program-card">
+            <img src="assets/images/cardio.jpg" alt="Cardio">
+            <h3>Cardio Workouts</h3>
+            <p>Boost your cardiovascular health with high-energy cardio sessions.</p>
+            <button onclick="viewCardioSchedule()">View Schedule</button>
+        </div>
+    </section>
+
+    <section id="trainers">
+        <h2>Our Trainers</h2>
+        <div class="trainer-card">
+            <img src="assets/images/trainer1.jpg" alt="Trainer 1">
+            <h3>John Doe</h3>
+            <p>Certified Yoga Instructor with 10+ years of experience.</p>
+        </div>
+        <div class="trainer-card">
+            <img src="assets/images/trainer2.jpg" alt="Trainer 2">
+            <h3>Jane Smith</h3>
+            <p>Professional Strength Trainer specializing in bodybuilding.</p>
+        </div>
+        <div class="trainer-card">
+            <img src="assets/images/trainer3.jpg" alt="Trainer 3">
+            <h3>Mike Johnson</h3>
+            <p>Cardio expert with a focus on high-intensity interval training (HIIT).</p>
+        </div>
+    </section>
+
+    <section id="registration">
+        <h2>Register for a Program</h2>
+        <form id="physicalFitnessForm">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="program">Select Program:</label>
+            <select id="program" name="program" required>
+                <option value="yoga">Yoga Classes</option>
+                <option value="strength-training">Strength Training</option>
+                <option value="cardio">Cardio Workouts</option>
+            </select>
+
+            <button type="submit">Register</button>
+        </form>
+        <p id="registrationResponse"></p>
+    </section>
+
+    <footer>
+        <p>&copy; 2023 Communex. All rights reserved.</p>
+    </footer>
+
+    <script src="scripts.js"></script>
+</body>
+</html>

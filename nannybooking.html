@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Nanny</title>
+    <link rel="stylesheet" href="nanny.css">
+    <script defer src="scripts.js"></script>
+    
+</head>
+<body>
+    <header>
+        <h1>Book a Professional Nanny</h1>
+        <p>Reliable and trusted babysitters for your child.</p>
+        <a href="babycare.html" class="btn">Back to Baby Care</a>
+    </header>
+
+    <section id="booking">
+        <h2>Book a Nanny</h2>
+        <div class="booking-form">
+            <form id="nannyBookingForm">
+                <label for="name">Your Name:</label>
+                <input type="text" id="name" name="name" required>
+                
+                <label for="date">Booking Date:</label>
+                <input type="date" id="date" name="date" required>
+                
+                <label for="time">Preferred Time:</label>
+                <input type="time" id="time" name="time" required>
+                
+                <button type="submit" class="btn">Book Now</button>
+            </form>
+        </div>
+    </section>
+
+    <section id="nanny-profile" style="display:none;">
+        <h2>Your Nanny Details</h2>
+        <div class="nanny-profile">
+            <img src="./assets/images/icons/sarah.png" alt="Nanny Profile">
+            <h3 id="nanny-name">Nanny Name: Jayanthi</h3>
+            <p id="nanny-experience">Experience: 5 years in professional childcare</p>
+            <p id="nanny-rating">Rating: ⭐⭐⭐⭐⭐</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 Communex. All rights reserved.</p>
+    </footer>
+
+    <script>
+        document.getElementById('nannyBookingForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            document.getElementById('nanny-profile').style.display = 'block';
+        });
+    </script>
+</body>
+</html>

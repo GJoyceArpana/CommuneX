@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Chat with Childcare Experts</title>
+    <link rel="stylesheet" href="livechat.css">
+    <script defer src="scripts.js"></script>
+    
+</head>
+<body>
+    <header>Live Chat with Childcare Experts
+        <p><a href="babycare.html" class="btn">Back to Baby Care</a></p>
+    </header>
+    
+    <div class="container">
+        <div class="chat-box" id="chatBox">
+            <p class="message">Welcome! A childcare expert will be with you shortly.</p>
+        </div>
+        
+        <div class="input-box">
+            <input type="text" id="userMessage" placeholder="Type your message...">
+            <button class="btn" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 ChildCare Connect. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        function sendMessage() {
+            let messageInput = document.getElementById("userMessage");
+            let messageText = messageInput.value.trim();
+            if (messageText === "") return;
+            
+            let chatBox = document.getElementById("chatBox");
+            let userMessage = document.createElement("p");
+            userMessage.classList.add("message");
+            userMessage.textContent = "You: " + messageText;
+            chatBox.appendChild(userMessage);
+            
+            messageInput.value = "";
+            chatBox.scrollTop = chatBox.scrollHeight;
+            
+            setTimeout(() => {
+                let responses = [
+                    "Expert: Thank you for reaching out! How can I assist you today?",
+                    "Expert: I understand. Could you provide more details?",
+                    "Expert: That's a common concern! Here's what I recommend...",
+                    "Expert: Great question! Let me share some insights on that.",
+                    "Expert: You're not alone! Many parents experience this."
+                ];
+                let botMessage = document.createElement("p");
+                botMessage.classList.add("message");
+                botMessage.textContent = responses[Math.floor(Math.random() * responses.length)];
+                chatBox.appendChild(botMessage);
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
