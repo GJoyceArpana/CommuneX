@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Enhanced Event Calendar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      .modal {
+        display: none;
+      }
+      .dark .bg-light {
+        background-color: #f5f5f5;
+      }
+      .dark .bg-dark {
+        background-color: #1c1c1e;
+      }
+      .dark .text-light {
+        color: #f5f5f5;
+      }
+      .dark .text-dark {
+        color: #1c1c1e;
+      }
+      .dark .border-light {
+        border-color: #444;
+      }
+      .dark .border-dark {
+        border-color: #999;
+      }
+      .event-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        position: absolute;
+        bottom: 4px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    </style>
+  </head>
+  <body class="bg-light text-dark dark:bg-dark dark:text-light">
+    <div class="container mx-auto p-8">
+      <h1 class="text-4xl text-center text-blue-600 mb-12 dark:text-blue-400">
+        Enhanced Event Calendar
+      </h1>
+      <div
+        class="flex flex-col md:flex-row bg-white rounded-lg shadow-lg overflow-hidden dark:bg-gray-800 dark:text-white"
+      >
+        <div
+          class="w-full md:w-1/4 p-6 bg-white border-r dark:bg-gray-800 dark:border-gray-700"
+        >
+          <h2 class="text-2xl text-blue-600 mb-4 dark:text-white">Events</h2>
+          <div id="eventList" class="space-y-4"></div>
+          <div class="mb-4">
+            <input
+              id="searchInput"
+              type="text"
+              class="w-full p-3 border border-light rounded-lg dark:bg-gray-600 dark:text-white dark:border-dark"
+              placeholder="Search Events"
+              oninput="searchEvents()"
+            />
+          </div>
+          <div class="mb-4">
+            <button
+              onclick="clearAllEvents()"
+              class="w-full py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition duration-300 dark:bg-red-700 dark:hover:bg-red-800"
+            >
+              Clear All Events
+            </button>
+          </div>
+        </div>
+        <div class="w-full md:w-3/4 p-6">
+          <div class="flex justify-between items-center mb-6">
+            <button
+              class="px-4 py-2 bg-blue-600 text-white rounded-lg dark:bg-blue-700 dark:text-white"
+              onclick="changeMonth(-1)"
+            >
+              &#10094;
+            </button>
+            <div
+              id="monthYear"
+              class="text-3xl font-semibold text-blue-600 dark:text-blue-400"
+            ></div>
+            <button
+              class="px-4 py-2 bg-blue-600 text-white rounded-lg dark:bg-blue-700 dark:text-white"
+              onclick="changeMonth(1)"
+            >
+              &#10095;
+            </button>
+          </div>
+          <div id="calendarGrid" class="grid grid-cols-7 gap-4"></div>
+        </div>
+      </div>
+    </div>
+    <div
+      id="eventModal"
+      class="modal fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-lg shadow-lg w-96 dark:bg-gray-700"
+    >
+      <h2 class="text-2xl text-center text-blue-600 mb-4 dark:text-white">
+        Add Event
+      </h2>
+      <input
+        id="eventInput"
+        type="text"
+        class="w-full p-3 border border-light rounded-lg mb-4 dark:bg-gray-600 dark:text-white dark:border-dark"
+        placeholder="Event Details"
+      />
+      <textarea
+        id="descriptionInput"
+        class="w-full p-3 border border-light rounded-lg mb-4 dark:bg-gray-600 dark:text-white dark:border-dark"
+        placeholder="Event Description"
+      ></textarea>
+      <input
+        id="reminderInput"
+        type="datetime-local"
+        class="w-full p-3 border border-light rounded-lg mb-4 dark:bg-gray-600 dark:text-white dark:border-dark"
+      />
+      <select
+        id="colorInput"
+        class="w-full p-3 border border-light rounded-lg mb-4 dark:bg-gray-600 dark:text-white dark:border-dark"
+      >
+        <option value="bg-red-600">Red</option>
+        <option value="bg-blue-600">Blue</option>
+        <option value="bg-green-600">Green</option>
+        <option value="bg-yellow-600">Yellow</option>
+      </select>
+      <select
+        id="recurringInput"
+        class="w-full p-3 border border-light rounded-lg mb-4 dark:bg-gray-600 dark:text-white dark:border-dark"
+      >
+        <option value="none">None</option>
+        <option value="daily">Daily</option>
+        <option value="weekly">Weekly</option>
+        <option value="monthly">Monthly</option>
+      </select>
+      <button
+        onclick="saveEvent()"
+        class="w-full py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300 dark:bg-blue-700 dark:hover:bg-blue-800"
+      >
+        Save Event
+      </button>
+      <button
+        onclick="closeModal()"
+        class="w-full py-3 mt-4 bg-gray-400 text-white rounded-lg hover:bg-gray-500 dark:bg-gray-600 dark:hover:bg-gray-700"
+      >
+        Cancel
+      </button>
+    </div>
+    <div
+      id="detailsModal"
+      class="modal fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white p-8 rounded-lg shadow-lg w-96 dark:bg-gray-700"
+    >
+      <h2 class="text-2xl text-center text-blue-600 mb-4 dark:text-white">
+        Event Details
+      </h2>
+      <p id="eventDetails" class="text-dark dark:text-light"></p>
+      <button
+        onclick="closeDetailsModal()"
+        class="w-full py-3 mt-4 bg-gray-400 text-white rounded-lg hover:bg-gray-500 dark:bg-gray-600 dark:hover:bg-gray-700"
+      >
+        Close
+      </button>
+      <button
+        onclick="editEvent()"
+        class="w-full py-3 mt-4 bg-green-600 text-white rounded-lg hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800"
+      >
+        Edit
+      </button>
+      <button
+        onclick="deleteEvent()"
+        class="w-full py-3 mt-4 bg-red-600 text-white rounded-lg hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800"
+      >
+        Delete
+      </button>
+    </div>
+    <button
+      onclick="toggleDarkMode()"
+      class="fixed top-6 right-6 p-3 bg-blue-600 text-white rounded-full dark:bg-blue-700"
+    >
+      🌙
+    </button>
+    <script>
+      const modal = document.getElementById("eventModal");
+      const detailsModal = document.getElementById("detailsModal");
+      const eventInput = document.getElementById("eventInput");
+      const descriptionInput = document.getElementById("descriptionInput");
+      const reminderInput = document.getElementById("reminderInput");
+      const colorInput = document.getElementById("colorInput");
+      const recurringInput = document.getElementById("recurringInput");
+      const searchInput = document.getElementById("searchInput");
+      const monthYear = document.getElementById("monthYear");
+      const calendarGrid = document.getElementById("calendarGrid");
+      const eventList = document.getElementById("eventList");
+      const body = document.body;
+      let selectedDay;
+      let selectedEvent;
+
+      const months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      let currentMonth = new Date().getMonth();
+      let currentYear = new Date().getFullYear();
+
+      const storedTheme = localStorage.getItem("theme");
+      if (storedTheme === "dark") {
+        body.classList.add("dark");
+      }
+
+      function toggleDarkMode() {
+        body.classList.toggle("dark");
+        const theme = body.classList.contains("dark") ? "dark" : "light";
+        localStorage.setItem("theme", theme);
+      }
+
+      function generateCalendar() {
+        monthYear.innerText = `${months[currentMonth]} ${currentYear}`;
+        calendarGrid.innerHTML = "";
+        eventList.innerHTML = "";
+
+        const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+        const numDays = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+        const weekdays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+        weekdays.forEach((day) => {
+          let weekdayDiv = document.createElement("div");
+          weekdayDiv.classList.add(
+            "text-center",
+            "font-bold",
+            "text-white",
+            "bg-blue-600",
+            "py-3",
+            "rounded"
+          );
+          weekdayDiv.innerText = day;
+          calendarGrid.appendChild(weekdayDiv);
+        });
+
+        for (let i = 0; i < firstDay; i++) {
+          let emptyCell = document.createElement("div");
+          calendarGrid.appendChild(emptyCell);
+        }
+
+        for (let day = 1; day <= numDays; day++) {
+          let dayCell = document.createElement("div");
+          dayCell.classList.add(
+            "bg-gray-200",
+            "p-4",
+            "rounded-lg",
+            "text-center",
+            "cursor-pointer",
+            "relative",
+            "hover:bg-blue-600",
+            "hover:text-white",
+            "transition",
+            "dark:bg-gray-600"
+          );
+          dayCell.innerText = day;
+          dayCell.onclick = () => openModal(dayCell);
+          calendarGrid.appendChild(dayCell);
+
+          let storedEvents = JSON.parse(
+            localStorage.getItem(`${currentYear}-${currentMonth + 1}-${day}`)
+          );
+          if (storedEvents) {
+            storedEvents.forEach((event) => {
+              let eventDot = document.createElement("div");
+              eventDot.classList.add("event-dot", event.colorClass);
+              dayCell.appendChild(eventDot);
+
+              let eventItem = document.createElement("div");
+              eventItem.classList.add(
+                "p-2",
+                "bg-gray-300",
+                "rounded-lg",
+                "cursor-pointer",
+                "hover:bg-gray-400",
+                "dark:bg-gray-500"
+              );
+              eventItem.innerText = `${months[currentMonth]} ${day}: ${event.eventText}`;
+              eventItem.onclick = () => showEventDetails(event, dayCell);
+              eventList.appendChild(eventItem);
+
+              if (event.reminderDate) {
+                scheduleReminder(
+                  event.reminderDate,
+                  `${months[currentMonth]} ${day}: ${event.eventText}`
+                );
+              }
+
+              if (event.recurringType !== "none") {
+                scheduleRecurringEvents(event, day);
+              }
+            });
+          }
+        }
+      }
+
+      function openModal(day) {
+        selectedDay = day;
+        modal.style.display = "block";
+        eventInput.value = "";
+        descriptionInput.value = "";
+        reminderInput.value = "";
+        colorInput.value = "bg-red-600";
+        recurringInput.value = "none";
+      }
+
+      function closeModal() {
+        modal.style.display = "none";
+      }
+
+      function showEventDetails(event, dayCell) {
+        selectedEvent = event;
+        selectedDay = dayCell;
+        document.getElementById("eventDetails").innerText = `
+        Event: ${event.eventText}
+        Description: ${event.descriptionText}
+        Date: ${months[currentMonth]} ${selectedDay.innerText}
+        Reminder: ${event.reminderDate || "None"}
+        Recurring: ${event.recurringType}
+      `;
+        detailsModal.style.display = "block";
+      }
+
+      function closeDetailsModal() {
+        detailsModal.style.display = "none";
+      }
+
+      function saveEvent() {
+        if (eventInput.value.trim()) {
+          let dayText = selectedDay.innerText;
+          let eventText = eventInput.value;
+          let descriptionText = descriptionInput.value;
+          let reminderDate = reminderInput.value;
+          let colorClass = colorInput.value;
+          let recurringType = recurringInput.value;
+          let storedEvents =
+            JSON.parse(
+              localStorage.getItem(
+                `${currentYear}-${currentMonth + 1}-${dayText}`
+              )
+            ) || [];
+          storedEvents.push({
+            eventText,
+            descriptionText,
+            reminderDate,
+            colorClass,
+            recurringType,
+          });
+          localStorage.setItem(
+            `${currentYear}-${currentMonth + 1}-${dayText}`,
+            JSON.stringify(storedEvents)
+          );
+
+          let eventDot = document.createElement("div");
+          eventDot.classList.add("event-dot", colorClass);
+          selectedDay.appendChild(eventDot);
+
+          let eventItem = document.createElement("div");
+          eventItem.classList.add(
+            "p-2",
+            "bg-gray-300",
+            "rounded-lg",
+            "cursor-pointer",
+            "hover:bg-gray-400",
+            "dark:bg-gray-500"
+          );
+          eventItem.innerText = `${months[currentMonth]} ${dayText}: ${eventText}`;
+          eventItem.onclick = () =>
+            showEventDetails(
+              {
+                eventText,
+                descriptionText,
+                reminderDate,
+                colorClass,
+                recurringType,
+              },
+              selectedDay
+            );
+          eventList.appendChild(eventItem);
+
+          if (reminderDate) {
+            scheduleReminder(
+              reminderDate,
+              `${months[currentMonth]} ${dayText}: ${eventText}`
+            );
+          }
+
+          if (recurringType !== "none") {
+            scheduleRecurringEvents(
+              {
+                eventText,
+                descriptionText,
+                reminderDate,
+                colorClass,
+                recurringType,
+              },
+              dayText
+            );
+          }
+        }
+        closeModal();
+      }
+
+      function scheduleRecurringEvents(event, dayText) {
+        let nextDate = new Date(currentYear, currentMonth, parseInt(dayText));
+        let increment;
+        if (event.recurringType === "daily") {
+          increment = 1;
+        } else if (event.recurringType === "weekly") {
+          increment = 7;
+        } else if (event.recurringType === "monthly") {
+          increment = 30;
+        }
+
+        for (let i = 0; i < 12; i++) {
+          nextDate.setDate(nextDate.getDate() + increment);
+          if (
+            nextDate.getMonth() > currentMonth ||
+            nextDate.getFullYear() > currentYear
+          ) {
+            break;
+          }
+          let newDay = nextDate.getDate();
+          let newMonth = nextDate.getMonth() + 1;
+          let newYear = nextDate.getFullYear();
+
+          let newStoredEvents =
+            JSON.parse(
+              localStorage.getItem(`${newYear}-${newMonth}-${newDay}`)
+            ) || [];
+          newStoredEvents.push(event);
+          localStorage.setItem(
+            `${newYear}-${newMonth}-${newDay}`,
+            JSON.stringify(newStoredEvents)
+          );
+        }
+      }
+
+      function editEvent() {
+        eventInput.value = selectedEvent.eventText;
+        descriptionInput.value = selectedEvent.descriptionText;
+        reminderInput.value = selectedEvent.reminderDate;
+        colorInput.value = selectedEvent.colorClass;
+        recurringInput.value = selectedEvent.recurringType;
+        closeDetailsModal();
+        modal.style.display = "block";
+      }
+
+      function deleteEvent() {
+        let dayText = selectedDay.innerText;
+        let storedEvents =
+          JSON.parse(
+            localStorage.getItem(
+              `${currentYear}-${currentMonth + 1}-${dayText}`
+            )
+          ) || [];
+        storedEvents = storedEvents.filter(
+          (event) => event.eventText !== selectedEvent.eventText
+        );
+        localStorage.setItem(
+          `${currentYear}-${currentMonth + 1}-${dayText}`,
+          JSON.stringify(storedEvents)
+        );
+        closeDetailsModal();
+        generateCalendar();
+      }
+
+      function clearAllEvents() {
+        localStorage.clear();
+        generateCalendar();
+      }
+
+      function searchEvents() {
+        const query = searchInput.value.toLowerCase();
+        const events = eventList.querySelectorAll("div");
+        events.forEach((event) => {
+          if (event.innerText.toLowerCase().includes(query)) {
+            event.style.display = "block";
+          } else {
+            event.style.display = "none";
+          }
+        });
+      }
+
+      function changeMonth(direction) {
+        currentMonth += direction;
+        if (currentMonth > 11) {
+          currentMonth = 0;
+          currentYear++;
+        } else if (currentMonth < 0) {
+          currentMonth = 11;
+          currentYear--;
+        }
+        generateCalendar();
+      }
+
+      function scheduleReminder(reminderDate, eventText) {
+        const reminderTime = new Date(reminderDate).getTime();
+        const currentTime = new Date().getTime();
+        const delay = reminderTime - currentTime;
+        if (delay > 0) {
+          setTimeout(() => {
+            alert(`Reminder: ${eventText}`);
+          }, delay);
+        }
+      }
+
+      generateCalendar();
+    </script>
+  </body>
+</html>
