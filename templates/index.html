@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Group Chat App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <style>
+      body {
+        background: linear-gradient(120deg, #84fab0, #8fd3f4);
+        background-size: 400% 400%;
+        animation: gradientBackground 15s ease infinite;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      @keyframes gradientBackground {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .particle {
+        position: absolute;
+        background-color: rgba(255, 255, 255, 0.6);
+        border-radius: 50%;
+        opacity: 0;
+        animation: particleMove 6s linear infinite;
+      }
+
+      @keyframes particleMove {
+        0% {
+          transform: translateY(0) translateX(0);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-100vh) translateX(-100vw);
+          opacity: 0;
+        }
+      }
+
+      button {
+        background-color: #ff6584;
+        color: white;
+        transition: background-color 0.3s ease;
+        font-size: 1.5rem;
+        padding: 1rem;
+      }
+
+      button:hover {
+        background-color: #e05670;
+      }
+
+      .container {
+        backdrop-filter: blur(10px);
+        background-color: rgba(255, 255, 255, 0.2);
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="text-3xl font-semibold mb-6 text-white">Group Chat App</h1>
+      <form action="/create_room" method="post">
+        <button type="submit" class="w-full py-3 rounded-md">
+          Create a Room
+        </button>
+      </form>
+    </div>
+
+    <div class="particles">
+      <!-- Particle elements will be created dynamically -->
+    </div>
+
+    <script>
+      // Create particle elements
+      const particlesContainer = document.querySelector(".particles");
+      for (let i = 0; i < 100; i++) {
+        const particle = document.createElement("div");
+        particle.classList.add("particle");
+        const size = Math.random() * 10 + 5; // Random size between 5px and 15px
+        particle.style.width = `${size}px`;
+        particle.style.height = `${size}px`;
+        particle.style.top = `${Math.random() * 100}vh`;
+        particle.style.left = `${Math.random() * 100}vw`;
+        particle.style.animationDelay = `${Math.random() * 6}s`;
+        particlesContainer.appendChild(particle);
+      }
+    </script>
+  </body>
+</html>
