@@ -3,40 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Communex - Fitness</title>
-    <link rel="stylesheet" href="">
+    <title>CommuneX Active</title>
+    <link rel="stylesheet" href="fitness.css">
 </head>
 <body>
     <header>
-        <h1>Communex Fitness</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="services.html">Services</a></li>
-            </ul>
-        </nav>
+        <h1 id="main-title">CommuneX Active</h1>
     </header>
 
-    <section id="fitness">
-        <h2>Fitness Programs</h2>
-        <div class="fitness-program">
-            <img src="./assets/images/icons/fitness.jpg" alt="Physical Fitness">
-            <h3>Physical Fitness</h3>
-            <p>Join our fitness programs to stay healthy and active.</p>
-            <button>View Schedule</button>
-        </div>
-        <div class="fitness-program">
-            <img src="./assets/images/icons/calendar.jpg" alt="Calendar Streaks">
-            <h3>Calendar Streaks</h3>
-            <p>Track your fitness streaks and progress with our calendar.</p>
-            <button>View Streaks</button>
-        </div>
+
+    <!-- Group Fitness Scheduler (Appears First) -->
+    <section id="group-scheduler">
+        <h1>Group Fitness Scheduler</h1>
+        <label for="activity">Activity:</label>
+        <input type="text" id="activity" placeholder="e.g., Morning Walk, Yoga">
+        
+       <!-- Date & Time Input Fields Aligned in One Line -->
+<div class="input-group">
+    <label for="date">Date:</label>
+    <input type="date" id="date">
+
+    <label for="time">Time:</label>
+    <input type="time" id="time">
+</div>
+
+        
+        <button onclick="scheduleActivity()">Schedule</button>
+
+        <h2>Scheduled Activities</h2>
+        <ul id="activityList"></ul>
     </section>
 
-    <footer>
-        <p>&copy; 2025 Communex. All rights reserved.</p>
-    </footer>
+    <!-- Personalized AI-Powered Diet & Workout Plan -->
+    <section id="ai-plans">
+        <h1>Personalized Diet & Workout Plans</h1>
+        <input type="text" id="userInput" placeholder="Enter your fitness needs">
+        <button onclick="generatePlan()">Generate Plan</button>
 
-    <script src="scripts.js"></script>
+        <div id="dietPlan"></div>
+        <div id="workoutPlan"></div>
+    </section>
+
+    <script src="fitness.js"></script>
 </body>
 </html>
+
