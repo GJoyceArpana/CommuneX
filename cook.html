@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CommuneX Cooking Hub</title>
+    <link rel="stylesheet" href="cook.css">
+</head>
+<body>
+    <header>
+        <h1>CommuneX Cooking Hub</h1>
+        <p>Share, Discover, and Request Your Favorite Recipes!</p>
+    </header>
+
+    <main>
+        <!-- AI Recipe Generator -->
+        <section id="recipe-generator">
+            <h2>AI Recipe Generator</h2>
+            <div class="input-group">
+                <input type="text" id="recipeQuery" placeholder="Enter dish name">
+                <button id="generateRecipe">Generate Recipe</button>
+            </div>
+            <div id="recipeResult"></div>
+        </section>
+
+        <!-- Post Your Recipe -->
+        <section id="post-recipe">
+            <h2>Share Your Recipe</h2>
+            <input type="text" id="recipeTitle" placeholder="Recipe Title">
+            <textarea id="recipeContent" placeholder="Recipe Content"></textarea>
+            
+            <button id="postRecipe">Post Recipe</button>
+            
+        </section>
+
+        <!-- Ask the Community -->
+        <section id="request-recipe">
+            <h2>Ask the Community</h2>
+            <input type="text" id="recipeRequestTitle" placeholder="Request Title">
+            <textarea id="recipeRequestContent" placeholder="Request Content"></textarea>
+            <button id="submitRequest">Submit Request</button>
+            <h3>Requests from Users:</h3>
+            <div id="requestsList"></div>
+        </section>
+        
+        <section id="search-recipe">
+            <h2>Search for a Recipe</h2>
+            <div class="input-group">
+                <input type="text" id="searchQuery" placeholder="Enter recipe name">
+                <button id="searchRecipe">Search</button>
+            </div>
+            <div id="searchResult"></div>
+        </section>
+        
+
+        <!-- Community Recipes Feed -->
+        <section id="recipe-feed">
+            <h2>Community Recipes</h2>
+            <div id="recipesList"></div>  <!-- This is where the recipes will be displayed -->
+        </section>
+        
+    </main>
+
+    <script type="module" src="cook.js"></script>
+</body>
+</html>
+
