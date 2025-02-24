@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Room - {{ room_code }}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <style>
+      @keyframes fly {
+        0% {
+          transform: translateY(0);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-20px);
+          opacity: 0;
+        }
+      }
+
+      .message-container {
+        position: relative;
+        padding: 16px;
+        margin-bottom: 16px;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        font-size: 1.25rem;
+      }
+
+      .message-actions {
+        margin-top: 8px;
+        display: flex;
+        gap: 10px;
+      }
+
+      .reaction-emoji {
+        animation: fly 0.6s ease-out;
+      }
+
+      input,
+      button {
+        font-size: 1.25rem;
+      }
+
+      .emoji-container {
+        display: flex;
+        gap: 5px;
+        margin-top: 5px;
+      }
+
+      .editable-text {
+        display: inline-block;
+        width: 100%;
+        background-color: #f9f9f9;
+        padding: 8px;
+        border-radius: 5px;
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100">
+    <div class="max-w-6xl mx-auto p-8">
+      <div class="flex justify-between items-center mb-8">
+        <h1 class="text-4xl font-semibold">Room Code: {{ room_code }}</h1>
+      </div>
+
+      <div
+        id="enter-room"
+        class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center"
+      >
+        <div class="bg-white p-8 rounded-md">
+          <h2 class="text-3xl font-semibold mb-6">Enter Username</h2>
+          <input
+            type="text"
+            id="username_input"
+            class="border-2 p-3 w-full mb-6"
+            placeholder="Enter your username"
+            required
+          />
+          <button
+            id="join_room"
+            class="w-full bg-blue-500 text-white py-3 rounded-md"
+          >
+            Join Room
+          </button>
+        </div>
+      </div>
+
+      <div
+        id="messages"
+        class="bg-gray-200 p-8 rounded-lg mb-8 h-[700px] overflow-y-auto text-xl"
+      >
+        <!-- Messages will appear here -->
+      </div>
+
+      <div>
+        <input
+          type="text"
+          id="message_input"
+          class="border-2 p-3 w-full mb-3 text-lg"
+          placeholder="Type a message"
+          autocomplete="off"
+        />
+        <button
+          id="send_message"
+          class="w-full bg-green-500 text-white py-3 rounded-md"
+        >
+          Send
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const socket = io.connect(window.location.origin);
+      const roomCode = "{{ room_code }}";
+      const messagesDiv = document.getElementById("messages");
+      const messageInput = document.getElementById("message_input");
+      const sendMessageButton = document.getElementById("send_message");
+      const enterRoomDiv = document.getElementById("enter-room");
+      const usernameInput = document.getElementById("username_input");
+      const joinRoomButton = document.getElementById("join_room");
+
+      joinRoomButton.addEventListener("click", () => {
+        const username = usernameInput.value.trim();
+        if (username) {
+          socket.emit("join", { room_code: roomCode, username: username });
+          enterRoomDiv.style.display = "none";
+        }
+      });
+
+      socket.on("message", function (data) {
+        const messageElement = document.createElement("div");
+        messageElement.classList.add("message-container");
+        messageElement.innerHTML = `
+          <div>
+            <strong>${data.username}:</strong>
+            <span class="editable-text" contenteditable="false">${data.message}</span>
+            <div class="emoji-container"></div>
+            <div class="message-actions">
+              <button class="edit-btn" title="Edit">✏️</button>
+              <button class="delete-btn" title="Delete">🗑️</button>
+              <button class="react-btn" title="React">😍</button>
+              <button class="save-btn hidden" title="Save">💾</button>
+            </div>
+          </div>
+        `;
+        messagesDiv.appendChild(messageElement);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+        const editableText = messageElement.querySelector(".editable-text");
+        const editButton = messageElement.querySelector(".edit-btn");
+        const deleteButton = messageElement.querySelector(".delete-btn");
+        const reactButton = messageElement.querySelector(".react-btn");
+        const saveButton = messageElement.querySelector(".save-btn");
+        const emojiContainer = messageElement.querySelector(".emoji-container");
+
+        editButton.addEventListener("click", () => {
+          editableText.contentEditable = "true";
+          editableText.focus();
+          editButton.classList.add("hidden");
+          saveButton.classList.remove("hidden");
+        });
+
+        saveButton.addEventListener("click", () => {
+          editableText.contentEditable = "false";
+          const newMessage = editableText.textContent.trim();
+          socket.emit("edit_message", {
+            room_code: roomCode,
+            message_id: data.id,
+            new_message: newMessage,
+          });
+          saveButton.classList.add("hidden");
+          editButton.classList.remove("hidden");
+        });
+
+        deleteButton.addEventListener("click", () => {
+          socket.emit("delete_message", {
+            room_code: roomCode,
+            message_id: data.id,
+          });
+          messageElement.remove();
+        });
+
+        reactButton.addEventListener("click", () => {
+          emojiContainer.innerHTML = `
+            <button class="reaction-btn" data-emoji="👍">👍</button>
+            <button class="reaction-btn" data-emoji="❤️">❤️</button>
+            <button class="reaction-btn" data-emoji="😂">😂</button>
+            <button class="reaction-btn" data-emoji="😮">😮</button>
+            <button class="reaction-btn" data-emoji="😢">😢</button>
+            <button class="reaction-btn" data-emoji="😡">😡</button>
+          `;
+          emojiContainer.querySelectorAll(".reaction-btn").forEach((btn) => {
+            btn.addEventListener("click", () => {
+              const selectedEmoji = btn.getAttribute("data-emoji");
+              emojiContainer.innerHTML = `<span class="reaction-emoji">${selectedEmoji}</span>`;
+              emojiContainer.childNodes.forEach((emoji) => {
+                emoji.style.animation = "fly 0.6s ease-out";
+                setTimeout(() => {
+                  emoji.style.animation = "";
+                }, 600);
+              });
+            });
+          });
+        });
+      });
+
+      sendMessageButton.addEventListener("click", () => {
+        const message = messageInput.value;
+        if (message.trim()) {
+          socket.emit("send_message", {
+            room_code: roomCode,
+            username: usernameInput.value.trim(),
+            message: message,
+          });
+          messageInput.value = "";
+        }
+      });
+    </script>
+  </body>
+</html>
