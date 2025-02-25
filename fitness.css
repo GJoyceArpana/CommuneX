@@ -10,7 +10,9 @@ body {
     text-align: center;
     padding: 20px;
 }
-
+header{
+color:white;
+}
 /* Improve title spacing */
 #main-title {
     text-align: center;
