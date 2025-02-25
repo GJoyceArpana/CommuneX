@@ -36,8 +36,42 @@
         </div>
     </section>
 
+    <section id="ask">
+        <h2>Ask the Community</h2>
+        <div class="ask-container">
+            <form id="askForm">
+                <input type="text" id="itemName" name="itemName" placeholder="What do you need? (e.g., charger)" required>
+                <textarea id="itemDescription" name="itemDescription" placeholder="Provide a brief description..." required></textarea>
+                <button type="submit" class="btn">Submit Request</button>
+            </form>
+            <div id="askResults">
+                <!-- Requests will be displayed here -->
+            </div>
+        </div>
+    </section>
+
     <footer>
         <p>&copy; 2025 Communex. All rights reserved.</p>
     </footer>
+
+    <script>
+        document.getElementById('askForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const itemName = document.getElementById('itemName').value;
+            const itemDescription = document.getElementById('itemDescription').value;
+
+            const requestElement = document.createElement('div');
+            requestElement.classList.add('request-item');
+            requestElement.innerHTML = `
+                <h3>${itemName}</h3>
+                <p>${itemDescription}</p>
+            `;
+
+            document.getElementById('askResults').appendChild(requestElement);
+
+            // Clear the form
+            document.getElementById('askForm').reset();
+        });
+    </script>
 </body>
 </html>
