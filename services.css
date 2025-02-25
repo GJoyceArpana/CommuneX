@@ -10,7 +10,7 @@ body {
 
 /* Header */
 header {
-     background: url('./assets/images/icons/services-background.png') no-repeat center center fixed;
+    background: #007BFF;
     color: white;
     padding: 20px 5%;
     text-align: center;
@@ -115,6 +115,79 @@ nav ul li a:hover {
 
 .service-card .btn:hover {
     background: #0056b3;
+}
+
+/* Ask Section */
+#ask {
+    text-align: center;
+    padding: 50px 5%;
+    background: white;
+    border-radius: 15px;
+    max-width: 90%;
+    margin: 40px auto;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+#ask h2 {
+    font-size: 2rem;
+    margin-bottom: 40px;
+    color: #007BFF;
+}
+
+.ask-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#askForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#askForm input, #askForm textarea {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+
+#askForm button {
+    padding: 10px 20px;
+    background: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+#askForm button:hover {
+    background: #0056b3;
+}
+
+#askResults {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.request-item {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.request-item h3 {
+    margin: 0;
+    color: #007BFF;
+}
+
+.request-item p {
+    margin: 5px 0 0;
+    color: #555;
 }
 
 /* Footer */
