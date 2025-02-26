@@ -1,3 +1,4 @@
+import { db } from "./firebase-config.js";
 document.getElementById('nannyBookingForm').addEventListener('submit', function(event) {
     event.preventDefault();
     document.getElementById('nanny-profile').style.display = 'block';
