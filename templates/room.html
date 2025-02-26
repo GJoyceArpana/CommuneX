@@ -4,109 +4,235 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Room - {{ room_code }}</title>
-    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-      @keyframes fly {
-        0% {
-          transform: translateY(0);
-          opacity: 1;
-        }
-        100% {
-          transform: translateY(-20px);
-          opacity: 0;
-        }
+      /* Global Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Inter", sans-serif;
+      }
+
+      body {
+        background-image: url("https://images.unsplash.com/photo-1591788729390-7212ecda0325?w=1000&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8ZG9vZGxlfGVufDB8fDB8fHww");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        width: 100%;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(10px);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 90vh;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #030406, #000000);
+        color: white;
+        padding: 20px;
+        text-align: center;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .title {
+        font-size: 24px;
+        font-weight: 600;
+      }
+
+      .messages {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+        background: rgba(245, 245, 245, 0.8);
       }
 
       .message-container {
-        position: relative;
+        background: white;
         padding: 16px;
-        margin-bottom: 16px;
-        background-color: #ffffff;
-        border-radius: 10px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        font-size: 1.25rem;
+        margin-bottom: 12px;
+        border-radius: 12px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .message-container:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       }
 
       .message-actions {
         margin-top: 8px;
         display: flex;
-        gap: 10px;
+        gap: 8px;
       }
 
-      .reaction-emoji {
-        animation: fly 0.6s ease-out;
+      .message-actions button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        color: #666;
+        transition: color 0.2s ease;
       }
 
-      input,
-      button {
-        font-size: 1.25rem;
+      .message-actions button:hover {
+        color: #000000;
       }
 
       .emoji-container {
         display: flex;
-        gap: 5px;
-        margin-top: 5px;
+        gap: 8px;
+        margin-top: 8px;
       }
 
-      .editable-text {
-        display: inline-block;
+      .emoji-container button {
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 18px;
+      }
+
+      .input-container {
+        display: flex;
+        gap: 12px;
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.9);
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .input {
+        flex: 1;
+        padding: 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        font-size: 14px;
+        outline: none;
+        transition: border-color 0.2s ease;
+      }
+
+      .input:focus {
+        border-color: #000000;
+      }
+
+      .button {
+        padding: 12px 24px;
+        background: #000000;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+      }
+
+      .button:hover {
+        background: #020205;
+      }
+
+      .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
         width: 100%;
-        background-color: #f9f9f9;
-        padding: 8px;
-        border-radius: 5px;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .modal-content {
+        background: white;
+        padding: 24px;
+        border-radius: 12px;
+        width: 90%;
+        max-width: 400px;
+        text-align: center;
+      }
+
+      .modal-title {
+        font-size: 20px;
+        font-weight: 600;
+        margin-bottom: 16px;
+      }
+
+      .modal-input {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #e0e0e0;
+        border-radius: 8px;
+        margin-bottom: 16px;
+        font-size: 14px;
+      }
+
+      .modal-button {
+        width: 100%;
+        padding: 12px;
+        background: #000000;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+      }
+
+      .modal-button:hover {
+        background: #000000;
       }
     </style>
   </head>
-  <body class="bg-gray-100">
-    <div class="max-w-6xl mx-auto p-8">
-      <div class="flex justify-between items-center mb-8">
-        <h1 class="text-4xl font-semibold">Room Code: {{ room_code }}</h1>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1 class="title">Room Code: {{ room_code }}</h1>
       </div>
 
-      <div
-        id="enter-room"
-        class="fixed inset-0 bg-gray-800 bg-opacity-75 flex items-center justify-center"
-      >
-        <div class="bg-white p-8 rounded-md">
-          <h2 class="text-3xl font-semibold mb-6">Enter Username</h2>
+      <div id="enter-room" class="modal">
+        <div class="modal-content">
+          <h2 class="modal-title">Enter Username</h2>
           <input
             type="text"
             id="username_input"
-            class="border-2 p-3 w-full mb-6"
+            class="modal-input"
             placeholder="Enter your username"
             required
           />
-          <button
-            id="join_room"
-            class="w-full bg-blue-500 text-white py-3 rounded-md"
-          >
-            Join Room
-          </button>
+          <button id="join_room" class="modal-button">Join Room</button>
         </div>
       </div>
 
-      <div
-        id="messages"
-        class="bg-gray-200 p-8 rounded-lg mb-8 h-[700px] overflow-y-auto text-xl"
-      >
+      <div id="messages" class="messages">
         <!-- Messages will appear here -->
       </div>
 
-      <div>
+      <div class="input-container">
         <input
           type="text"
           id="message_input"
-          class="border-2 p-3 w-full mb-3 text-lg"
+          class="input"
           placeholder="Type a message"
           autocomplete="off"
         />
-        <button
-          id="send_message"
-          class="w-full bg-green-500 text-white py-3 rounded-md"
-        >
-          Send
-        </button>
+        <button id="send_message" class="button">Send</button>
       </div>
     </div>
 
