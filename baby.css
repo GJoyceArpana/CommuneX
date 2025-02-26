@@ -1,25 +1,40 @@
-/* General Styles */
+/* Global Styles */
 body {
     font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
     text-align: center;
-    background: url('./assets/images/icons/baby2.png') no-repeat center center/cover;
-    color: #333;
+    background-image: url('./assets/images/icons/baby2.png'); /* Background image */
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    line-height: 1.6;
 }
 
 /* Header */
 header {
-    background-color: #ff9999; /* Softer red for warmth */
+    background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
     padding: 20px;
     color: white;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+header p {
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+}
+
 /* Buttons */
 .btn {
     display: inline-block;
-    background-color: #ff6666;
+    background-color: #ff5722; /* Orange button */
     color: white;
     padding: 10px 20px;
     text-decoration: none;
@@ -29,14 +44,14 @@ header {
 }
 
 .btn:hover {
-    background-color: #ff4d4d;
+    background-color: #e64a19; /* Darker orange on hover */
     transform: scale(1.05);
 }
 
 /* Services Section */
 #services {
     padding: 50px 20px;
-    background: rgba(255, 235, 205, 0.5); /* Light peach tint */
+    background: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
     border-radius: 10px;
     margin: 20px auto;
     max-width: 90%;
@@ -44,10 +59,13 @@ header {
 }
 
 #services h2 {
-    color: #d9534f; /* Warm red */
+    font-size: 2rem;
+    margin-bottom: 40px;
+    color: #ff5722; /* Orange color for headings */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-/* Service Cards */
+/* Service Grid */
 .service-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -57,12 +75,14 @@ header {
     margin: 0 auto;
 }
 
+/* Service Cards */
 .service-card {
-    background: white;
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
 }
 
 .service-card:hover {
@@ -71,48 +91,66 @@ header {
 }
 
 .service-card img {
-    max-width: 80px;
+    width: 150px; /* Larger image size */
+    height: 150px; /* Larger image size */
     border-radius: 50%;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
+    object-fit: cover; /* Ensures the image fits well */
 }
 
 .service-card h3 {
-    font-size: 1.4em;
-    color: #444;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #ff5722; /* Orange color for headings */
 }
 
 .service-card p {
-    font-size: 1em;
-    color: #666;
+    font-size: 1rem;
+    color: #ddd; /* Light gray for text */
+    margin-bottom: 20px;
 }
 
-/* Testimonials */
+/* Testimonials Section */
 #testimonials {
     padding: 40px 20px;
-    background: #ffebcd;
+    background: rgba(0, 0, 0, 0.8); /* Semi-transparent background */
     border-radius: 10px;
     margin: 20px auto;
     max-width: 90%;
 }
 
 #testimonials h2 {
-    color: #d9534f;
+    font-size: 2rem;
+    margin-bottom: 40px;
+    color: #ff5722; /* Orange color for headings */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 /* Testimonial Cards */
 .testimonial {
     padding: 20px;
     max-width: 600px;
-    background: white;
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent background */
     border-radius: 8px;
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
     margin: 0 auto 20px;
     transition: opacity 0.5s ease-in-out;
 }
 
+.testimonial p {
+    font-size: 1rem;
+    color: #ddd; /* Light gray for text */
+    margin-bottom: 10px;
+}
+
+.testimonial span {
+    font-size: 0.9rem;
+    color: #ff5722; /* Orange color for author */
+}
+
 /* Footer */
 footer {
-    background: #333;
+    background: rgba(0, 0, 0, 0.7); /* Semi-transparent background */
     color: white;
     padding: 15px;
     font-size: 0.9em;
