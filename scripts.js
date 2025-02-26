@@ -1,5 +1,4 @@
-import { db } from "./firebase-config.js";
-import { collection, addDoc, getDocs, onSnapshot, orderBy, query, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+
 document.getElementById('nannyBookingForm').addEventListener('submit', function(event) {
     event.preventDefault();
     document.getElementById('nanny-profile').style.display = 'block';
