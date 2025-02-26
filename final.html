@@ -21,7 +21,7 @@
       }
 
       .container {
-        max-width: 2000px;
+        max-width: 800px; /* Reduced from 2000px */
         margin: 20px;
         background-color: rgba(255, 255, 255, 0.522);
         border-radius: 10px;
@@ -36,8 +36,8 @@
       h1 {
         text-align: center;
         color: rgb(255, 255, 255);
-        margin: 20px 0;
-        font-size: 4em;
+        margin: 10px 0; /* Reduced margin */
+        font-size: 2em; /* Reduced from 4em */
         text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
       }
 
@@ -51,8 +51,8 @@
 
       /* Events Sidebar */
       .events-sidebar {
-        width: 450px;
-        padding: 20px;
+        width: 250px; /* Reduced from 450px */
+        padding: 10px; /* Reduced padding */
         background-color: rgba(255, 255, 255, 0.2);
         border-right: 1px solid #ddd;
         overflow-y: auto;
@@ -60,24 +60,24 @@
 
       .events-sidebar h2 {
         color: rgba(255, 255, 255, 0.8);
-        margin-bottom: 20px;
-        font-size: 1.5em;
+        margin-bottom: 10px; /* Reduced margin */
+        font-size: 1.2em; /* Reduced from 1.5em */
       }
 
       .event-list {
-        max-height: 400px;
+        max-height: 300px; /* Reduced from 400px */
         overflow-y: auto;
-        margin-bottom: 20px;
+        margin-bottom: 10px; /* Reduced margin */
       }
 
       .event-item {
         background-color: rgba(255, 255, 255, 0.1);
-        padding: 15px;
+        padding: 10px; /* Reduced padding */
         border-radius: 5px;
-        margin-bottom: 10px;
+        margin-bottom: 5px; /* Reduced margin */
         cursor: pointer;
         transition: transform 0.2s ease-in-out, background-color 0.3s;
-        font-size: 1.2em;
+        font-size: 1em; /* Reduced from 1.2em */
       }
 
       .event-item:hover {
@@ -86,23 +86,23 @@
 
       .events-sidebar input {
         width: 100%;
-        padding: 10px;
+        padding: 8px; /* Reduced padding */
         border: 1px solid #dddddd95;
         border-radius: 5px;
-        margin-bottom: 10px;
+        margin-bottom: 8px; /* Reduced margin */
         transition: border-color 0.3s;
-        font-size: 1.2em;
+        font-size: 1em; /* Reduced from 1.2em */
       }
 
       .events-sidebar button {
         width: 100%;
-        padding: 10px;
+        padding: 8px; /* Reduced padding */
         background-color: rgba(255, 255, 255, 0.473);
         border: none;
         border-radius: 5px;
         cursor: pointer;
         transition: background-color 0.3s;
-        font-size: 1.2em;
+        font-size: 1em; /* Reduced from 1.2em */
       }
 
       .events-sidebar button:hover {
@@ -112,7 +112,7 @@
       /* Calendar Main */
       .calendar-main {
         flex-grow: 1;
-        padding: 20px;
+        padding: 10px; /* Reduced padding */
         background-color: rgba(255, 255, 255, 0.2);
       }
 
@@ -120,18 +120,18 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 20px;
+        margin-bottom: 10px; /* Reduced margin */
       }
 
       .calendar-header button {
         background-color: rgba(255, 255, 255, 0.608);
         color: #333;
         border: none;
-        padding: 15px 20px;
+        padding: 10px 15px; /* Reduced padding */
         border-radius: 5px;
         cursor: pointer;
         transition: background-color 0.3s;
-        font-size: 2em;
+        font-size: 1.5em; /* Reduced from 2em */
       }
 
       .calendar-header button:hover {
@@ -141,28 +141,28 @@
       .calendar-grid {
         display: grid;
         grid-template-columns: repeat(7, 1fr);
-        gap: 15px;
+        gap: 5px; /* Reduced gap */
       }
 
       .weekday {
-        font-size: 1.5em;
+        font-size: 1em; /* Reduced from 1.5em */
         color: #333;
         text-align: center;
-        padding: 10px;
+        padding: 5px; /* Reduced padding */
         background-color: rgba(255, 255, 255, 0.634);
         border-radius: 5px;
       }
 
       .calendar-day {
         background-color: rgba(255, 255, 255, 0.711);
-        padding: 30px;
+        padding: 10px; /* Reduced padding */
         border-radius: 5px;
         text-align: center;
         cursor: pointer;
         position: relative;
         transition: background-color 0.3s, transform 0.2s;
         color: #333;
-        font-size: 1.5em;
+        font-size: 1em; /* Reduced from 1.5em */
       }
 
       .calendar-day:hover {
@@ -178,42 +178,42 @@
         left: 50%;
         transform: translate(-50%, -50%);
         background-color: rgba(255, 255, 255, 0.818);
-        padding: 20px;
+        padding: 15px; /* Reduced padding */
         border-radius: 10px;
         box-shadow: 0 5px 20px rgba(0, 0, 0, 0.595);
         z-index: 1000;
-        width: 400px;
+        width: 300px; /* Reduced from 400px */
         animation: fadeIn 0.5s ease-in-out;
         transition: all 0.3s;
       }
 
       .modal h2 {
         color: rgb(119, 118, 118);
-        margin-bottom: 20px;
+        margin-bottom: 15px; /* Reduced margin */
         text-align: center;
-        font-size: 1.8em;
+        font-size: 1.5em; /* Reduced from 1.8em */
       }
 
       .modal input,
       .modal textarea {
         width: 100%;
-        padding: 10px;
-        margin-bottom: 10px;
+        padding: 8px; /* Reduced padding */
+        margin-bottom: 8px; /* Reduced margin */
         border: 1px solid #ddd;
         border-radius: 5px;
         transition: border-color 0.3s;
-        font-size: 1.2em;
+        font-size: 1em; /* Reduced from 1.2em */
       }
 
       .modal button.save,
       .modal button.cancel {
         width: 100%;
-        padding: 10px;
+        padding: 8px; /* Reduced padding */
         border: none;
         border-radius: 5px;
         cursor: pointer;
         transition: background-color 0.3s;
-        font-size: 1.2em;
+        font-size: 1em; /* Reduced from 1.2em */
       }
 
       .modal button.save {
@@ -229,41 +229,16 @@
         position: fixed;
         top: 20px;
         right: 20px;
-        padding: 10px;
+        padding: 8px; /* Reduced padding */
         background-color: rgba(255, 255, 255, 0.8);
         border: none;
         border-radius: 50%;
         cursor: pointer;
         transition: background-color 0.3s;
-        font-size: 1.5em;
+        font-size: 1.2em; /* Reduced from 1.5em */
       }
 
       .theme-toggle:hover {
-        background-color: rgba(255, 255, 255, 0.6);
-      }
-
-      .dark-theme .calendar-container,
-      .dark-theme .modal,
-      .dark-theme .event-item,
-      .dark-theme .events-sidebar input {
-        background-color: rgba(68, 68, 68, 0.8);
-        color: #fff;
-        border-color: #555;
-      }
-
-      .dark-theme .calendar-day {
-        background-color: rgba(85, 85, 85, 0.8);
-      }
-
-      .dark-theme .modal button.save,
-      .dark-theme .calendar-header button,
-      .dark-theme .events-sidebar button {
-        background-color: rgba(255, 255, 255, 0.8);
-      }
-
-      .dark-theme .modal button.cancel,
-      .dark-theme .events-sidebar button:hover,
-      .dark-theme .calendar-header button:hover {
         background-color: rgba(255, 255, 255, 0.6);
       }
 
